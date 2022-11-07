@@ -1,4 +1,4 @@
-import { ClientOptions, Application, PostContent, UploadOptions, Status, ScheduledStatus, Context, Account } from './types'
+import { ClientOptions, Application, PostContent, UploadOptions, Status, ScheduledStatus, Context, Account, Media } from './types'
 import { getToken, verifyToken } from './actions/oauth'
 import { toot, upload, tootAction, fetchAction, _delete, get } from './actions/toots'
 import { ReadStream } from 'fs'
@@ -18,8 +18,8 @@ export class Tooter {
 
   // Statuses
   async toot(status: string | PostContent): Promise<Status|ScheduledStatus> { return await toot(status, this.url, this.token)}
-  async upload(file: Buffer | ReadStream, options: UploadOptions): Promise<any> {return await upload(file, options, this.url, this.token)}
-  async delete(id:string): Promise<any> {return await _delete(id, this.url, this.token)}
+  async upload(file: Buffer | ReadStream, options: UploadOptions): Promise<Media> {return await upload(file, options, this.url, this.token)}
+  async delete(id:string): Promise<Status> {return await _delete(id, this.url, this.token)}
 
   // Actions
 
