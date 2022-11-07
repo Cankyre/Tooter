@@ -203,3 +203,8 @@ export type UploadOptions = {
   },
   description?: string
 }
+
+export type Context = {
+  ancestors: Status[],
+  descendants: Status[]
+}

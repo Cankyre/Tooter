@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { PostContent, ScheduledStatus, Status, UploadOptions } from '../types'
+import { PostContent, ScheduledStatus, Status, UploadOptions, Context } from '../types'
 import FormData from 'form-data'
 import { ReadStream } from 'fs'
 
@@ -79,6 +79,33 @@ export async function upload(file:Buffer|ReadStream, options: UploadOptions, url
 
 export async function tootAction(endpoint: string, id: string, url: string, token: string): Promise<Status> {
   const res = await axios.post((new URL("/api/v1/statuses/"+id+"/"+endpoint, url)).toString(), null, {
+    headers: {
+      "Authorization": "Bearer " + token
+    }
+  })
+  return res.data
+}
+
+export async function _delete(id: string, url: string, token: string): Promise<Status> {
+  const res = await axios.delete((new URL("/api/v1/statuses/"+id, url)).toString(), {
+    headers: {
+      "Authorization": "Bearer " + token
+    }
+  })
+  return res.data
+}
+
+export async function get(id: string, url: string, token: string): Promise<Status> {
+  const res = await axios.get((new URL("/api/v1/statuses/"+id, url)).toString(), {
+    headers: {
+      "Authorization": "Bearer " + token
+    }
+  })
+  return res.data
+}
+
+export async function fetchAction(endpoint: string, id: string, url: string, token: string): Promise<any> {
+  const res = await axios.get((new URL("/api/v1/statuses/"+id+"/"+endpoint, url)).toString(), {
     headers: {
       "Authorization": "Bearer " + token
     }
